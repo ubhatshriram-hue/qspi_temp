@@ -20,22 +20,23 @@ class qspi_agent extends uvm_agent;
 
     uvm_config_db#(virtual qspi_controller_if)::set(this, "*", "vif", cfg.vif);
 
-
-    if (is_active == UVM_ACTIVE) begin
+    // active
+    if (cfg.spi_act == UVM_ACTIVE) begin
       sequencer = qspi_sequencer    ::type_id::create("sequencer", this);
       driver    = qspi_driver       ::type_id::create("driver",    this);
       in_mon    = qspi_input_monitor::type_id::create("in_mon",    this);
     end
-    else begin
+
+    // passive
+    if (cfg.spi_pas == UVM_PASSIVE) begin
       out_mon   = qspi_output_monitor::type_id::create("out_mon", this);
     end
   endfunction
 
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    if (is_active == UVM_ACTIVE) begin
+    if (cfg.spi_act == UVM_ACTIVE)
       driver.seq_item_port.connect(sequencer.seq_item_export);
-    end
   endfunction
 
 endclass
