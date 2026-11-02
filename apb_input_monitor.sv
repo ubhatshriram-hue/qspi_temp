@@ -28,6 +28,7 @@ class apb_input_monitor extends uvm_monitor;
 	endtask
 	virtual task collect_data();
 			@(apb_vif.apb_ip_mon_cb);
+			t.PRESETn = apb_vif.apb_ip_mon_cb.PRESETn;
 			t.PSEL=apb_vif.apb_ip_mon_cb.PSEL;
 			t.PENABLE=apb_vif.apb_ip_mon_cb.PENABLE;
 			t.PWRITE=apb_vif.apb_ip_mon_cb.PWRITE;
