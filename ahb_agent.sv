@@ -20,14 +20,14 @@ class ahb_agent extends uvm_agent;
 
     uvm_config_db#(virtual qspi_controller_if)::set(this, "*", "vif", cfg.vif);
 
-    // active side: stimulus + input monitor
+    // active
     if (cfg.ahb_act == UVM_ACTIVE) begin
       sequencer = ahb_sequencer    ::type_id::create("sequencer", this);
       driver    = ahb_driver       ::type_id::create("driver",    this);
       in_mon    = ahb_input_monitor::type_id::create("in_mon",    this);
     end
 
-    // passive side: output monitor
+    // passive
     if (cfg.ahb_pas == UVM_PASSIVE) begin
       out_mon   = ahb_output_monitor::type_id::create("out_mon", this);
     end
